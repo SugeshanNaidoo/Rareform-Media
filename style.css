@@ -317,7 +317,7 @@ h3{ font-size: 1.35rem; }
 
 /* ---------- CTA band ---------- */
 .cta-band{
-  background: var(--bg-2);
+  background: var(--bg-1);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   padding: var(--space-5) 0;
