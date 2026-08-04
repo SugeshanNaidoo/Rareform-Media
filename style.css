@@ -191,15 +191,24 @@ h3{ font-size: 1.35rem; }
   padding: var(--space-2) 0;
 }
 .brand{ display: flex; align-items: center; gap: 0.9rem; }
-.brand-mark{
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--ivory);
-  line-height: 1;
+
+/* Logo — sized for nav (compact) and footer (slightly larger),
+   swap the src in the markup for the real logo file when ready. */
+.logo{
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
 }
-.brand-mark span{ color: var(--gold); }
+.nav-logo{
+  width: 40px;
+  height: 40px;
+}
+.footer-logo{
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-2);
+}
+
 .brand-word{ display: flex; flex-direction: column; line-height: 1.1; }
 .brand-word .word{
   font-family: var(--font-body);
