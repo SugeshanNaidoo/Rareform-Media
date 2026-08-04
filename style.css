@@ -1,24 +1,28 @@
 /* =========================================================
-   RAREFORM MEDIA — Universal Stylesheet
+   COASTLINE CREATIVE — Universal Stylesheet
    Cinematic editorial dark theme, built off the brand mark
    ========================================================= */
 
 /* ---------- Design tokens ---------- */
 :root{
-  --black:        #0a0a09;
-  --bg-1:         #0a0a09;   /* page background */
-  --bg-2:         #141311;   /* card / panel background */
-  --bg-3:         #1d1b17;   /* raised panel / hover */
-  --line:         rgba(245, 241, 232, 0.12);
-  --line-strong:  rgba(245, 241, 232, 0.24);
+  --black:        #000000;
+  --bg-1:         #070605;   /* page background */
+  --bg-2:         #131110;   /* card / panel background */
+  --bg-3:         #1d1a17;   /* raised panel / hover */
+  --line:         rgba(230, 221, 208, 0.10);
+  --line-strong:  rgba(230, 221, 208, 0.20);
 
-  --ivory:        #f5f1e8;   /* primary text on dark */
-  --stone:        #a39c8e;   /* secondary / muted text */
-  --stone-dim:    #6f695d;
+  --ivory:        #f2ece1;   /* primary text on dark */
+  --stone:        #a89a89;   /* secondary / muted text */
+  --stone-dim:    #6b6053;
 
-  --gold:         #c9a15a;   /* primary accent */
-  --gold-light:   #e4c989;
-  --gold-dim:     #8f7038;
+  --gold:         #b99873;   /* primary accent — tan/gold from the palette */
+  --gold-light:   #d6b898;
+  --gold-dim:     #8a7256;
+
+  --navy:         #123249;   /* deep navy — secondary accent, dim */
+  --ocean:        #194b78;   /* navy blue from the palette */
+  --ocean-light:  #4680ab;   /* lighter tint — hover / highlight */
 
   --font-display: 'Playfair Display', 'Times New Roman', serif;
   --font-body:    'Jost', 'Segoe UI', sans-serif;
@@ -91,8 +95,7 @@ h2{ font-size: clamp(1.9rem, 3.4vw, 2.75rem); }
 h3{ font-size: 1.35rem; }
 .lede{ font-size: 1.15rem; color: var(--stone); max-width: 46em; }
 
-/* Eyebrow — the flanking-line label pulled from the RM mark's
-   "— MEDIA —" treatment. Used as the site's signature motif. */
+/* Eyebrow — the flanking-line label. Used as the site's signature motif. */
 .eyebrow{
   display: flex;
   align-items: center;
@@ -110,7 +113,7 @@ h3{ font-size: 1.35rem; }
   content: "";
   flex: 1 1 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-dim));
+  background: linear-gradient(90deg, transparent, var(--ocean));
   max-width: 60px;
 }
 .eyebrow::after{ background: linear-gradient(90deg, var(--gold-dim), transparent); }
@@ -192,37 +195,20 @@ h3{ font-size: 1.35rem; }
 }
 .brand{ display: flex; align-items: center; gap: 0.9rem; }
 
-/* Logo — sized for nav (compact) and footer (slightly larger),
-   swap the src in the markup for the real logo file when ready. */
+/* Logo — full lockup image (icon + wordmark), sized to a fixed height
+   with width auto so it keeps its native ~3.2:1 aspect ratio. */
 .logo{
   display: block;
   flex-shrink: 0;
   object-fit: contain;
+  width: auto;
 }
 .nav-logo{
-  width: 40px;
   height: 40px;
 }
 .footer-logo{
-  width: 48px;
-  height: 48px;
+  height: 46px;
   margin-bottom: var(--space-2);
-}
-
-.brand-word{ display: flex; flex-direction: column; line-height: 1.1; }
-.brand-word .word{
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--ivory);
-}
-.brand-word .sub{
-  font-size: 0.6rem;
-  letter-spacing: 0.42em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-top: 2px;
 }
 
 .nav-links{ display: flex; align-items: center; gap: var(--space-4); }
@@ -302,13 +288,13 @@ h3{ font-size: 1.35rem; }
   padding: var(--space-4);
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
-.card:hover{ border-color: var(--gold-dim); transform: translateY(-3px); }
+.card:hover{ border-color: var(--ocean); transform: translateY(-3px); }
 .card-icon{
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
-  color: var(--gold);
+  color: var(--ocean-light);
   margin-bottom: var(--space-3);
 }
 .card-icon svg{ width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
@@ -394,7 +380,7 @@ h3{ font-size: 1.35rem; }
   border-bottom: 1px solid var(--line);
 }
 .value-row:last-child{ border-bottom: none; }
-.value-mark{ color: var(--gold); min-width: 2.5rem; flex: none; }
+.value-mark{ color: var(--ocean-light); min-width: 2.5rem; flex: none; }
 .value-mark svg{ width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- Pricing / packages ---------- */
@@ -455,7 +441,7 @@ h3{ font-size: 1.35rem; }
   font-size: 0.92rem;
 }
 .form-success.show{ display: block; }
-.form-success.is-error{ border-color: #a15a5a; color: #e8a3a3; }
+.form-success.is-error{ border-color: #8a5348; color: #dba296; }
 
 /* ---------- Contact page extras ---------- */
 .info-list{ display: flex; flex-direction: column; gap: var(--space-3); }
