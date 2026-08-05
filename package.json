@@ -1,8 +1,8 @@
 {
-  "name": "rareform-media-site",
+  "name": "coastline-creative-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Rareform Media static site with a Vercel serverless contact form function.",
+  "description": "Coastline Creative static site with a Vercel serverless contact form function.",
   "engines": {
     "node": ">=18"
   }

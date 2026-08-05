@@ -1,5 +1,5 @@
 // /api/contact.js
-// Vercel serverless function that receives the Rareform Media contact form
+// Vercel serverless function that receives the Coastline Creative contact form
 // submission and emails it using Resend (https://resend.com).
 //
 // ENV VARS REQUIRED (set these in your Vercel project → Settings → Environment Variables):
@@ -148,7 +148,7 @@ module.exports = async function handler(req, res) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: `Rareform Media Website <${fromEmail}>`,
+        from: `Coastline Creative Website <${fromEmail}>`,
         to: [toEmail],
         reply_to: email,
         subject: `New price inquiry from ${safeName}`,

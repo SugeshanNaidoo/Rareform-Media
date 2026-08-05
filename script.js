@@ -1,6 +1,43 @@
-// Rareform Media — shared site behaviour
+// Coastline Creative — shared site behaviour
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Prefetch the other pages on this site so navigating between them feels
+  // instant. Runs once the browser is idle (or after a short delay as a
+  // fallback) so it never competes with the current page's own loading.
+  (function prefetchSitePages() {
+    var pages = ['index.html', 'about.html', 'products.html', 'contact.html'];
+    var current = location.pathname.split('/').pop() || 'index.html';
+    var prefetched = {};
+
+    function prefetch(href) {
+      if (prefetched[href] || href === current) return;
+      prefetched[href] = true;
+      var link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = href;
+      document.head.appendChild(link);
+    }
+
+    function prefetchAll() {
+      pages.forEach(prefetch);
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(prefetchAll, { timeout: 2000 });
+    } else {
+      setTimeout(prefetchAll, 1200);
+    }
+
+    // Belt-and-braces: also prefetch on hover/touch in case idle prefetch
+    // hasn't fired yet by the time someone's about to click.
+    document.querySelectorAll('a[href$=".html"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!href) return;
+      a.addEventListener('pointerenter', function () { prefetch(href); }, { once: true });
+      a.addEventListener('touchstart', function () { prefetch(href); }, { once: true, passive: true });
+    });
+  })();
+
   // Mobile navigation toggle
   var toggle = document.querySelector('.nav-toggle');
   var links = document.querySelector('.nav-links');
