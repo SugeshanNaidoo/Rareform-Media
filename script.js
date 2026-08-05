@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // instant. Runs once the browser is idle (or after a short delay as a
   // fallback) so it never competes with the current page's own loading.
   (function prefetchSitePages() {
-    var pages = ['index.html', 'about.html', 'products.html', 'contact.html'];
+    var pages = ['index.html', 'about.html', 'services.html', 'contact.html'];
     var current = location.pathname.split('/').pop() || 'index.html';
     var prefetched = {};
 
