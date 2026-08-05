@@ -114,7 +114,7 @@ h3{ font-size: 1.35rem; }
   content: "";
   flex: 1 1 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--ocean));
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
   max-width: 60px;
 }
 .eyebrow::after{ background: linear-gradient(90deg, var(--gold-dim), transparent); }
@@ -287,23 +287,46 @@ h3{ font-size: 1.35rem; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: var(--space-4);
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  transition:
+    border-color 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.card:hover{ border-color: var(--ocean); transform: translateY(-3px); }
+.card:hover{
+  border-color: var(--ocean);
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px -22px rgba(25, 75, 120, 0.45);
+}
 .card-icon{
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--line-strong);
   border-radius: 50%;
   color: var(--gold);
-  transition: color 0.25s ease, border-color 0.25s ease;
+  background: rgba(25, 75, 120, 0);
+  transition:
+    color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   margin-bottom: var(--space-3);
 }
-.card:hover .card-icon{ color: var(--ocean); border-color: var(--ocean); }
+.card:hover .card-icon{
+  color: var(--ocean);
+  border-color: var(--ocean);
+  background: rgba(25, 75, 120, 0.14);
+  transform: scale(1.08) rotate(-6deg);
+}
 .card-icon svg{ width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .card h3{ margin-bottom: var(--space-1); }
 .card p{ color: var(--stone); font-size: 0.95rem; }
 .card .btn{ margin-top: var(--space-2); }
+
+@media (prefers-reduced-motion: reduce){
+  .card, .card-icon{ transition: none; }
+  .card:hover{ transform: none; }
+  .card:hover .card-icon{ transform: none; }
+}
 
 .media-card{ background: var(--bg-2); border: 1px solid var(--line); overflow: hidden; }
 .media-card img{ width: 100%; aspect-ratio: 4/3; object-fit: cover; filter: grayscale(0.3); }
@@ -383,9 +406,20 @@ h3{ font-size: 1.35rem; }
   border-bottom: 1px solid var(--line);
 }
 .value-row:last-child{ border-bottom: none; }
-.value-mark{ color: var(--gold); min-width: 2.5rem; flex: none; transition: color 0.25s ease; }
-.value-row:hover .value-mark{ color: var(--ocean); }
+.value-mark{
+  color: var(--gold);
+  min-width: 2.5rem;
+  flex: none;
+  display: flex;
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.value-row:hover .value-mark{ color: var(--ocean); transform: scale(1.1) rotate(-6deg); }
 .value-mark svg{ width: 26px; height: 26px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+@media (prefers-reduced-motion: reduce){
+  .value-mark{ transition: none; }
+  .value-row:hover .value-mark{ transform: none; }
+}
 
 /* ---------- Pricing / packages ---------- */
 .package{
@@ -516,7 +550,7 @@ h3{ font-size: 1.35rem; }
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: stroke 0.2s ease;
+  transition: stroke 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .footer-contact a:hover svg{ stroke: var(--ocean); }
 .footer-contact span{ line-height: 1.3; }
