@@ -119,28 +119,94 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (form) {
     var submitBtn = form.querySelector('button[type="submit"]');
+    var fieldNames = ['name', 'email', 'phone', 'service', 'message'];
+
+    var messages = {
+      name: { required: 'Please enter your full name.' },
+      email: { required: 'Please enter your email address.', invalid: 'Please enter a valid email address.' },
+      phone: { required: 'Please enter your phone number.' },
+      service: { required: 'Please select what you\u2019re enquiring about.' },
+      message: { required: 'Please enter a short message.' }
+    };
+
+    function fieldWrap(name) {
+      var el = form[name];
+      return el ? el.closest('.field') : null;
+    }
+
+    function setFieldError(name, message) {
+      var wrap = fieldWrap(name);
+      var errorEl = document.getElementById(name + '-error');
+      var input = form[name];
+      if (!wrap || !errorEl) return;
+      wrap.classList.add('has-error');
+      errorEl.textContent = message;
+      if (input) input.setAttribute('aria-invalid', 'true');
+    }
+
+    function clearFieldError(name) {
+      var wrap = fieldWrap(name);
+      var errorEl = document.getElementById(name + '-error');
+      var input = form[name];
+      if (!wrap || !errorEl) return;
+      wrap.classList.remove('has-error');
+      errorEl.textContent = '';
+      if (input) input.setAttribute('aria-invalid', 'false');
+    }
+
+    function clearAllErrors() {
+      fieldNames.forEach(clearFieldError);
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    // Validates one field and returns true if it's valid, showing/clearing
+    // its inline error either way.
+    function validateField(name) {
+      var value = (form[name] && form[name].value || '').trim();
+      if (!value) {
+        setFieldError(name, messages[name].required);
+        return false;
+      }
+      if (name === 'email' && !isValidEmail(value)) {
+        setFieldError(name, messages[name].invalid);
+        return false;
+      }
+      clearFieldError(name);
+      return true;
+    }
+
+    // Clear a field's error as soon as the person starts fixing it.
+    fieldNames.forEach(function (name) {
+      var el = form[name];
+      if (!el) return;
+      el.addEventListener('input', function () { validateField(name); });
+      el.addEventListener('change', function () { validateField(name); });
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
 
-      // checkValidity() doesn't catch whitespace-only input in required fields.
-      var requiredFields = [form.name, form.email, form.phone, form.service, form.message];
-      var hasBlankRequired = requiredFields.some(function (field) {
-        return !field.value || !field.value.trim();
-      });
-      if (hasBlankRequired) {
+      var validations = fieldNames.map(validateField);
+      var firstInvalid = fieldNames[validations.indexOf(false)];
+
+      if (firstInvalid) {
         if (success) {
           success.setAttribute('role', 'status');
           success.classList.add('show', 'is-error');
-          success.textContent = 'Please fill in every field before sending.';
-          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          success.textContent = 'Please fix the highlighted fields and try again.';
+        }
+        var invalidField = form[firstInvalid];
+        if (invalidField) {
+          invalidField.focus();
+          invalidField.closest('.field').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         return;
       }
+
+      clearAllErrors();
 
       var data = {
         name: form.name.value.trim(),
@@ -179,10 +245,19 @@ document.addEventListener('DOMContentLoaded', function () {
             success.classList.add('show');
             success.textContent = 'Thanks — your message has been sent. We reply to every enquiry within one business day.';
             form.reset();
+            clearAllErrors();
           } else {
             success.classList.add('show', 'is-error');
             success.textContent = (result.json && result.json.error) ||
               'Something went wrong sending your message. Please email us directly for now.';
+            // Map server-side field errors onto the same inline UI.
+            if (result.json && result.json.fields) {
+              Object.keys(result.json.fields).forEach(function (name) {
+                if (fieldNames.indexOf(name) !== -1) {
+                  setFieldError(name, result.json.fields[name]);
+                }
+              });
+            }
           }
           success.scrollIntoView({ behavior: 'smooth', block: 'center' });
         })

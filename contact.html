@@ -77,7 +77,7 @@
           "@type": "ContactPoint",
           "contactType": "sales",
           "name": "Franco Nel",
-          "telephone": "+27-83-290-2921",
+          "telephone": "+27-73-422-7882",
           "areaServed": "ZA",
           "availableLanguage": "English"
         },
@@ -176,23 +176,26 @@
 
         <form class="form-grid" id="contact-form" novalidate>
           <div class="field">
-            <label for="name">Full name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+            <label for="name">Full name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" aria-required="true" aria-describedby="name-error">
+            <span class="field-error" id="name-error" role="alert"></span>
           </div>
 
           <div class="field">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+            <label for="email">Email address <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" aria-required="true" aria-describedby="email-error">
+            <span class="field-error" id="email-error" role="alert"></span>
           </div>
 
           <div class="field">
-            <label for="phone">Phone number</label>
-            <input type="tel" id="phone" name="phone" placeholder="+27 00 000 0000" required autocomplete="tel">
+            <label for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+27 00 000 0000" required autocomplete="tel" aria-required="true" aria-describedby="phone-error">
+            <span class="field-error" id="phone-error" role="alert"></span>
           </div>
 
           <div class="field">
-            <label for="service">What are you enquiring about?</label>
-            <select id="service" name="service" required>
+            <label for="service">What are you enquiring about? <span class="req" aria-hidden="true">*</span></label>
+            <select id="service" name="service" required aria-required="true" aria-describedby="service-error">
               <option value="" disabled selected>Select a service</option>
               <option value="photography">Photography &amp; Videography</option>
               <option value="social">Social Media Content</option>
@@ -200,11 +203,13 @@
               <option value="branding">Branding &amp; Design</option>
               <option value="other">Something Else</option>
             </select>
+            <span class="field-error" id="service-error" role="alert"></span>
           </div>
 
           <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your project, timeline and budget." required></textarea>
+            <label for="message">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" placeholder="Tell us about your project, timeline and budget." required aria-required="true" aria-describedby="message-error"></textarea>
+            <span class="field-error" id="message-error" role="alert"></span>
           </div>
 
           <!-- Honeypot field — hidden from real visitors, catches simple bots -->
@@ -213,7 +218,7 @@
             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="form-note">We reply to every enquiry within one business day. You can also reach us directly using the details alongside.</p>
+          <p class="form-note">Fields marked <span class="req" aria-hidden="true">*</span> are required. We reply to every enquiry within one business day.</p>
 
           <button type="submit" class="btn btn-primary btn-block">Send Message</button>
         </form>
@@ -236,7 +241,7 @@
             <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h3l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
             <div>
               <h3>Franco Nel</h3>
-              <p><a href="tel:+27832902921">+27 83 290 2921</a></p>
+              <p><a href="tel:+27734227882">+27 73 422 7882</a></p>
             </div>
           </div>
           <div class="info-item">
@@ -256,7 +261,7 @@
         </div>
 
         <p class="eyebrow left">Business Hours</p>
-        <table class="hours-table" style="margin-bottom: var(--space-4);">
+        <table class="hours-table">
           <tbody>
             <tr><td>Monday – Friday</td><td>08:00 – 17:00</td></tr>
             <tr><td>Saturday</td><td>09:00 – 13:00</td></tr>
@@ -264,13 +269,6 @@
             <tr><td>Shoots &amp; events</td><td>By appointment</td></tr>
           </tbody>
         </table>
-
-        <div class="map-placeholder">
-          <svg class="pin" viewBox="0 0 24 24" aria-hidden="true" style="width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 21s7-7.4 7-12a7 7 0 1 0-14 0c0 4.6 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>
-          <strong>Coastline Creative Studio</strong>
-          <span>Durban, KwaZulu-Natal, South Africa</span>
-          <span>Map view available on request</span>
-        </div>
       </div>
 
     </div>
@@ -310,7 +308,7 @@
       <h3>Contact</h3>
       <ul class="footer-contact">
         <li><a href="mailto:coastlinecreate@gmail.com"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 6l9 7 9-7"/></svg><span>coastlinecreate@gmail.com</span></a></li>
-        <li><a href="tel:+27832902921"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Franco Nel — +27 83 290 2921</span></a></li>
+        <li><a href="tel:+27734227882"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Franco Nel — +27 73 422 7882</span></a></li>
         <li><a href="tel:+27711434546"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h3l2 5-2 1a12 12 0 0 0 6 6l1-2 5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Dakota Kilian — +27 71 143 4546</span></a></li>
         <li><a href="contact.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-7.4 7-12a7 7 0 1 0-14 0c0 4.6 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg><span>Durban, KwaZulu-Natal</span></a></li>
       </ul>
