@@ -123,58 +123,55 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /* --- Parallax + header state, on one shared rAF loop --- */
-  var header = document.querySelector('.site-header');
-  var layers = [];
-  var ticking = false;
+  /* ---------------------------------------------------------
+     Theme toggle. The initial theme is applied by a small inline
+     script in <head> so there's no flash of the wrong theme; this
+     only handles switching afterwards.
+     --------------------------------------------------------- */
+  (function themeSwitcher() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
 
-  function collectLayers() {
-    layers = [];
-    if (reduceMotion) return;
+    var root = document.documentElement;
+    var osDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // `limit` is the fraction of the layer's own height available as
-    // headroom — the offset is clamped to it so an edge is never exposed.
-    var heroBg = document.querySelector('.hero-bg');
-    if (heroBg) layers.push({ el: heroBg, speed: 0.12, anchor: 'top', limit: 0.10 });
+    function currentTheme() {
+      var set = root.getAttribute('data-theme');
+      if (set === 'light' || set === 'dark') return set;
+      return osDark.matches ? 'dark' : 'light';
+    }
 
-    // Images inside a clipped figure can drift without exposing an edge,
-    // because the CSS scales them up to leave headroom.
-    document.querySelectorAll('.figure img, .founder-photo img').forEach(function (img) {
-      img.classList.add('parallax');
-      layers.push({ el: img, speed: 0.07, anchor: 'center', limit: 0.07 });
+    function syncLabel() {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      btn.setAttribute('title', 'Switch to ' + next + ' theme');
+    }
+
+    btn.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('cc-theme', next); } catch (e) { /* private mode */ }
+      syncLabel();
     });
-  }
+
+    // Follow the OS only while the visitor hasn't picked for themselves.
+    var onOsChange = function () {
+      if (!root.getAttribute('data-theme')) syncLabel();
+    };
+    if (osDark.addEventListener) { osDark.addEventListener('change', onOsChange); }
+    else if (osDark.addListener) { osDark.addListener(onOsChange); }
+
+    syncLabel();
+  })();
+
+  /* --- Header scroll state, on a throttled rAF loop --- */
+  var header = document.querySelector('.site-header');
+  var ticking = false;
 
   function update() {
     ticking = false;
     var y = window.scrollY || document.documentElement.scrollTop || 0;
-    var vh = window.innerHeight;
-
     if (header) header.classList.toggle('scrolled', y > 20);
-
-    for (var i = 0; i < layers.length; i++) {
-      var layer = layers[i];
-      var rect = layer.el.getBoundingClientRect();
-
-      // Skip anything well outside the viewport — no point doing the maths.
-      if (rect.bottom < -200 || rect.top > vh + 200) continue;
-
-      var offset;
-      if (layer.anchor === 'top') {
-        offset = y * layer.speed;
-      } else {
-        // How far this element's centre sits from the viewport centre,
-        // as -1 (below the fold) to 1 (above it).
-        var progress = ((vh / 2) - (rect.top + rect.height / 2)) / vh;
-        offset = progress * layer.speed * vh * 0.5;
-      }
-
-      var max = rect.height * layer.limit;
-      if (offset > max) offset = max;
-      if (offset < -max) offset = -max;
-
-      layer.el.style.setProperty('--par', offset.toFixed(1) + 'px');
-    }
   }
 
   function onScroll() {
@@ -184,27 +181,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  if ('requestAnimationFrame' in window) {
-    collectLayers();
+  if (header && 'requestAnimationFrame' in window) {
     update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () { collectLayers(); onScroll(); }, { passive: true });
-
-    // If the person switches the OS motion setting mid-session, honour it
-    // without needing a reload.
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var onMotionChange = function (e) {
-      reduceMotion = e.matches;
-      if (reduceMotion) {
-        layers.forEach(function (l) { l.el.style.removeProperty('--par'); });
-        layers = [];
-      } else {
-        collectLayers();
-      }
-      onScroll();
-    };
-    if (mq.addEventListener) { mq.addEventListener('change', onMotionChange); }
-    else if (mq.addListener) { mq.addListener(onMotionChange); }
   }
 
   /* ---------------------------------------------------------

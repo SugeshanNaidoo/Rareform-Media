@@ -6,24 +6,16 @@
    =========================================================== */
 
 /* ---------- 1. Tokens ---------- */
+
+/* Brand colours, sampled from logo.png. These never change between
+   themes — they're the identity, not the surface. */
 :root{
-  /* Brand — sampled from the logo */
-  --ink:        #0b1f35;  /* deepest navy — dark sections, body text */
-  --ink-soft:   #15385c;  /* mid navy */
-  --ocean:      #185484;  /* logo wave blue */
-  --tide:       #3b86b8;  /* logo highlight blue */
-  --sand:       #b8946a;  /* logo gold — accent, used sparingly */
-  --sand-light: #d8c09c;  /* logo gold highlight */
-
-  /* Neutrals */
-  --shell:      #f7f5f1;  /* warm off-white page background */
-  --shell-deep: #ece7df;  /* alternating band */
-  --white:      #ffffff;
-  --muted:      #5c6b7a;  /* secondary text on light */
-  --muted-dark: #9db2c4;  /* secondary text on dark */
-
-  --line:       rgba(11, 31, 53, 0.12);
-  --line-dark:  rgba(255, 255, 255, 0.14);
+  --deep:       #0b1f35;  /* brand navy — always-dark bands, both themes */
+  --ink-soft:   #15385c;
+  --ocean:      #185484;
+  --tide:       #3b86b8;
+  --sand:       #b8946a;
+  --sand-light: #d8c09c;
 
   /* Type */
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -42,10 +34,107 @@
   --radius:    14px;
   --radius-sm: 8px;
 
-  --shadow:    0 2px 4px rgba(11,31,53,0.04), 0 12px 32px rgba(11,31,53,0.07);
-  --shadow-lg: 0 4px 8px rgba(11,31,53,0.06), 0 24px 60px rgba(11,31,53,0.12);
-
   --header-h: 68px;
+}
+
+/* Light theme — the default. */
+:root,
+[data-theme="light"]{
+  --ink:        #0b1f35;  /* primary text */
+  --muted:      #556270;  /* secondary text */
+  --muted-dark: #9db2c4;  /* secondary text on dark bands */
+
+  --shell:      #f7f5f1;  /* page background */
+  --shell-deep: #ece7df;  /* alternating band */
+  --white:      #ffffff;  /* cards, form fields, raised surfaces */
+
+  --line:       rgba(11, 31, 53, 0.12);
+  --line-dark:  rgba(255, 255, 255, 0.14);
+
+  --field-bg:   #f7f5f1;
+  --danger:     #b3402f;
+  --danger-text:#8d3122;
+  --danger-bg:  rgba(179,64,47,0.07);
+
+  --shadow:     0 2px 4px rgba(11,31,53,0.04), 0 12px 32px rgba(11,31,53,0.07);
+  --shadow-lg:  0 4px 8px rgba(11,31,53,0.06), 0 24px 60px rgba(11,31,53,0.12);
+
+  --header-bg:  rgba(247,245,241,0.92);
+  --header-bg-solid: rgba(247,245,241,0.96);
+
+  --on-accent:  #ffffff;   /* text on an --ocean fill */
+  --gold-text:  #846232;   /* small gold text — AA on every light surface */
+
+  color-scheme: light;
+}
+
+/* Dark theme — deeper than the brand navy so the always-dark bands still
+   read as distinct surfaces rather than disappearing into the page. */
+[data-theme="dark"]{
+  --ink:        #e9f0f6;  /* primary text */
+  --muted:      #9fb3c4;
+  --muted-dark: #9fb3c4;
+
+  --shell:      #071726;  /* page background */
+  --shell-deep: #0c2338;  /* alternating band */
+  --white:      #102a42;  /* cards, form fields, raised surfaces */
+
+  --line:       rgba(233, 240, 246, 0.14);
+  --line-dark:  rgba(233, 240, 246, 0.16);
+
+  --field-bg:   #0a2035;
+  --danger:     #e08a7a;
+  --danger-text:#f0b4a8;
+  --danger-bg:  rgba(224,138,122,0.10);
+
+  --shadow:     0 2px 4px rgba(0,0,0,0.28), 0 12px 32px rgba(0,0,0,0.34);
+  --shadow-lg:  0 4px 8px rgba(0,0,0,0.32), 0 24px 60px rgba(0,0,0,0.46);
+
+  --header-bg:  rgba(7,23,38,0.90);
+  --header-bg-solid: rgba(7,23,38,0.97);
+
+  /* Lift the accents slightly — the light-theme values go muddy on a dark
+     background and fail contrast at small sizes. */
+  --ocean:      #57a8dd;
+  --sand:       #d3ae80;
+  --on-accent:  #06192b;
+  --gold-text:  #d3ae80;
+
+  color-scheme: dark;
+}
+
+/* Follow the OS when the visitor hasn't chosen for themselves. */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:        #e9f0f6;
+    --muted:      #9fb3c4;
+    --muted-dark: #9fb3c4;
+
+    --shell:      #071726;
+    --shell-deep: #0c2338;
+    --white:      #102a42;
+
+    --line:       rgba(233, 240, 246, 0.14);
+    --line-dark:  rgba(233, 240, 246, 0.16);
+
+    --field-bg:   #0a2035;
+    --danger:     #e08a7a;
+    --danger-text:#f0b4a8;
+    --danger-bg:  rgba(224,138,122,0.10);
+
+    --shadow:     0 2px 4px rgba(0,0,0,0.28), 0 12px 32px rgba(0,0,0,0.34);
+    --shadow-lg:  0 4px 8px rgba(0,0,0,0.32), 0 24px 60px rgba(0,0,0,0.46);
+
+    --header-bg:  rgba(7,23,38,0.90);
+    --header-bg-solid: rgba(7,23,38,0.97);
+
+    --ocean:      #57a8dd;
+    --sand:       #d3ae80;
+    --on-accent:  #06192b;
+    --gold-text:  #d3ae80;
+
+    color-scheme: dark;
+  }
 }
 
 /* ---------- 2. Reset ---------- */
@@ -103,8 +192,8 @@ p:last-child{ margin-bottom: 0; }
   position: absolute;
   left: -9999px;
   top: 0;
-  background: var(--ink);
-  color: var(--white);
+  background: var(--deep);
+  color: #fff;
   padding: 0.75rem 1.25rem;
   z-index: 999;
 }
@@ -152,7 +241,7 @@ h3{ font-size: clamp(1.15rem, 3.2vw, 1.35rem); letter-spacing: -0.005em; }
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--gold-text);
   margin: 0 0 var(--s2);
 }
 .eyebrow::after{
@@ -188,10 +277,10 @@ h3{ font-size: clamp(1.15rem, 3.2vw, 1.35rem); letter-spacing: -0.005em; }
 
 .band-shell{ background: var(--shell-deep); }
 .band-white{ background: var(--white); }
-.band-ink{ background: var(--ink); color: var(--white); }
+.band-ink{ background: var(--deep); color: #fff; }
 .band-ink .lede,
 .band-ink .prose p{ color: var(--muted-dark); }
-.band-ink h1, .band-ink h2, .band-ink h3{ color: var(--white); }
+.band-ink h1, .band-ink h2, .band-ink h3{ color: #fff; }
 
 .section-head{ margin-bottom: var(--s4); max-width: 44em; }
 .section-head.centered{
@@ -228,7 +317,7 @@ h3{ font-size: clamp(1.15rem, 3.2vw, 1.35rem); letter-spacing: -0.005em; }
 
 .btn-primary{
   background: var(--ocean);
-  color: var(--white);
+  color: var(--on-accent);
   box-shadow: 0 6px 18px rgba(24,84,132,0.22);
 }
 .btn-primary:hover{ background: var(--ink-soft); box-shadow: 0 10px 26px rgba(24,84,132,0.28); }
@@ -236,16 +325,16 @@ h3{ font-size: clamp(1.15rem, 3.2vw, 1.35rem); letter-spacing: -0.005em; }
 .btn-secondary{
   background: transparent;
   color: var(--ink);
-  border-color: rgba(11,31,53,0.22);
+  border-color: var(--line);
 }
 .btn-secondary:hover{ border-color: var(--ocean); color: var(--ocean); background: rgba(24,84,132,0.05); }
 
 .on-dark .btn-secondary,
-.band-ink .btn-secondary{ color: var(--white); border-color: rgba(255,255,255,0.35); }
+.band-ink .btn-secondary{ color: #fff; border-color: rgba(255,255,255,0.35); }
 .on-dark .btn-secondary:hover,
-.band-ink .btn-secondary:hover{ background: rgba(255,255,255,0.1); border-color: var(--white); color: var(--white); }
+.band-ink .btn-secondary:hover{ background: rgba(255,255,255,0.1); border-color: #fff; color: #fff; }
 
-.btn-sand{ background: var(--sand); color: var(--ink); }
+.btn-sand{ background: var(--sand); color: var(--deep); }
 .btn-sand:hover{ background: var(--sand-light); }
 
 .btn-block{ width: 100%; }
@@ -270,7 +359,7 @@ h3{ font-size: clamp(1.15rem, 3.2vw, 1.35rem); letter-spacing: -0.005em; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(247,245,241,0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -373,7 +462,7 @@ body.nav-open .site-header{
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--gold-text);
   margin: 0 0 var(--s2);
 }
 .nav-foot-list{ display: grid; gap: 0.9rem; }
@@ -437,6 +526,48 @@ body.nav-open .site-header{
 }
 .nav-cta .btn{ display: none; }   /* desktop-only inline CTA */
 
+/* The logo's "CREATIVE" wordmark and wave outline are navy, which sits too
+   close to a dark surface. Lift them where the background is dark — the
+   footer is dark in both themes, so it always gets the treatment. */
+.footer-logo{ filter: brightness(1.45) saturate(0.92); }
+[data-theme="dark"] .nav-logo{ filter: brightness(1.45) saturate(0.92); }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .nav-logo{ filter: brightness(1.45) saturate(0.92); }
+}
+
+/* Theme toggle */
+.theme-toggle{
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+}
+.theme-toggle:hover{ border-color: var(--ocean); color: var(--ocean); }
+.theme-toggle svg{
+  width: 19px; height: 19px;
+  grid-area: 1 / 1;
+  fill: none; stroke: currentColor;
+  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  transition: opacity .25s ease, transform .35s ease;
+}
+/* Each icon shows the theme you'd switch *to*. */
+.theme-toggle .icon-moon{ opacity: 1; transform: none; }
+.theme-toggle .icon-sun{ opacity: 0; transform: rotate(-60deg) scale(.6); }
+[data-theme="dark"] .theme-toggle .icon-moon{ opacity: 0; transform: rotate(60deg) scale(.6); }
+[data-theme="dark"] .theme-toggle .icon-sun{ opacity: 1; transform: none; }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon{ opacity: 0; transform: rotate(60deg) scale(.6); }
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun{ opacity: 1; transform: none; }
+}
+
 .nav-toggle{
   display: flex;
   flex-direction: column;
@@ -462,19 +593,12 @@ body.nav-open .site-header{
 /* ---------- 7. Hero ---------- */
 .hero{
   position: relative;
-  background: var(--ink);
-  color: var(--white);
+  background: var(--deep);
+  color: #fff;
   overflow: hidden;
   isolation: isolate;
 }
-.hero-bg{
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -14%;
-  height: 128%;   /* headroom so the parallax offset never shows an edge */
-  z-index: -2;
-}
+.hero-bg{ position: absolute; inset: 0; z-index: -2; }
 .hero-bg img{ width: 100%; height: 100%; object-fit: cover; }
 .hero-bg::after{
   content: "";
@@ -488,7 +612,7 @@ body.nav-open .site-header{
   padding-block: calc(var(--s6) + 1rem) var(--s6);
   max-width: 44rem;
 }
-.hero h1{ color: var(--white); margin-bottom: var(--s3); }
+.hero h1{ color: #fff; margin-bottom: var(--s3); }
 .hero .lede{ color: rgba(255,255,255,0.82); margin-bottom: var(--s4); }
 .hero-actions{ display: flex; flex-direction: column; gap: var(--s2); }
 
@@ -499,7 +623,7 @@ body.nav-open .site-header{
   display: block;
   width: 100%;
   height: 46px;
-  background: var(--ink);
+  background: var(--deep);
   color: var(--shell);
   margin-top: -1px;
 }
@@ -507,8 +631,8 @@ body.nav-open .site-header{
 
 /* Compact hero for interior pages */
 .page-hero{
-  background: var(--ink);
-  color: var(--white);
+  background: var(--deep);
+  color: #fff;
   padding-block: var(--s5);
   position: relative;
   overflow: hidden;
@@ -520,7 +644,7 @@ body.nav-open .site-header{
   background: radial-gradient(120% 90% at 12% 0%, rgba(24,84,132,0.55), transparent 62%);
 }
 .page-hero .container{ position: relative; }
-.page-hero h1{ color: var(--white); }
+.page-hero h1{ color: #fff; }
 .page-hero .lede{ color: rgba(255,255,255,0.8); }
 
 /* ---------- 8. Cards ---------- */
@@ -660,7 +784,7 @@ body.nav-open .site-header{
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--gold-text);
   margin: 0;
 }
 
@@ -682,7 +806,7 @@ body.nav-open .site-header{
   position: absolute;
   top: -0.75rem; left: var(--s3);
   background: var(--ocean);
-  color: var(--white);
+  color: var(--on-accent);
   font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0.16em;
@@ -759,8 +883,8 @@ body.nav-open .site-header{
   font-family: inherit;
   font-size: 1rem;              /* 16px minimum stops iOS zoom-on-focus */
   color: var(--ink);
-  background: var(--shell);
-  border: 1px solid rgba(11,31,53,0.16);
+  background: var(--field-bg);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
   appearance: none;
@@ -783,14 +907,14 @@ body.nav-open .site-header{
 }
 .field-error{
   font-size: 0.82rem;
-  color: #b3402f;
+  color: var(--danger);
   min-height: 0;
 }
 .field.has-error input,
 .field.has-error select,
 .field.has-error textarea{
-  border-color: #b3402f;
-  box-shadow: 0 0 0 3px rgba(179,64,47,0.12);
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(179,64,47,0.16);
 }
 .honeypot{
   position: absolute;
@@ -812,9 +936,9 @@ body.nav-open .site-header{
 }
 .form-status.show{ display: block; }
 .form-status.is-error{
-  background: rgba(179,64,47,0.07);
-  border-color: rgba(179,64,47,0.35);
-  color: #8d3122;
+  background: var(--danger-bg);
+  border-color: var(--danger);
+  color: var(--danger-text);
 }
 
 /* ---------- 15. Contact details ---------- */
@@ -910,7 +1034,7 @@ body.nav-open .site-header{
 .faq-item[open] .faq-icon{
   transform: rotate(180deg);
   background: var(--ocean);
-  color: var(--white);
+  color: var(--on-accent);
 }
 
 .faq-answer{
@@ -932,8 +1056,8 @@ body.nav-open .site-header{
 
 /* ---------- 17. CTA band ---------- */
 .cta-band{
-  background: var(--ink);
-  color: var(--white);
+  background: var(--deep);
+  color: #fff;
   padding-block: var(--s5);
   text-align: center;
   position: relative;
@@ -946,13 +1070,13 @@ body.nav-open .site-header{
   background: radial-gradient(80% 120% at 50% 120%, rgba(24,84,132,0.6), transparent 70%);
 }
 .cta-band .container{ position: relative; }
-.cta-band h2{ color: var(--white); }
+.cta-band h2{ color: #fff; }
 .cta-band .lede{ color: rgba(255,255,255,0.8); margin-inline: auto; margin-bottom: var(--s3); }
 .cta-actions{ display: flex; flex-direction: column; gap: var(--s2); align-items: stretch; }
 
 /* ---------- 17. Footer ---------- */
 .site-footer{
-  background: var(--ink);
+  background: var(--deep);
   color: rgba(255,255,255,0.75);
   padding-block: var(--s5) var(--s3);
   font-size: 0.93rem;
@@ -971,7 +1095,7 @@ body.nav-open .site-header{
 }
 .footer-col li + li{ margin-top: 0.7rem; }
 .footer-col a{ color: rgba(255,255,255,0.72); }
-.footer-col a:hover{ color: var(--white); }
+.footer-col a:hover{ color: #fff; }
 
 .footer-contact a{
   display: grid;
@@ -993,7 +1117,7 @@ body.nav-open .site-header{
   display: grid; place-items: center;
   border: 1px solid var(--line-dark);
   border-radius: 50%;
-  color: var(--white);
+  color: #fff;
   transition: background-color .2s ease, border-color .2s ease;
 }
 .social-row a:hover{ background: rgba(255,255,255,0.1); border-color: var(--sand-light); }
@@ -1065,7 +1189,7 @@ body.nav-open .site-header{
   to{ opacity: 1; transform: none; }
 }
 
-/* Hero background drifts slowly on load, then parallax takes over */
+/* Hero background eases in with a slow settle on load */
 .hero-bg img{
   transform: scale(1.14);
   animation: heroZoom 12s ease-out both;
@@ -1073,15 +1197,6 @@ body.nav-open .site-header{
 @keyframes heroZoom{
   from{ transform: scale(1.22); }
   to{ transform: scale(1.14); }
-}
-
-/* Parallax. JS writes --par (a pixel offset) onto the element; the layer
-   is oversized so the offset never exposes an edge. */
-.parallax{ will-change: transform; }
-.hero-bg{ transform: translate3d(0, var(--par, 0px), 0); }
-.figure img.parallax,
-.founder-photo img.parallax{
-  transform: scale(1.18) translate3d(0, var(--par, 0px), 0);
 }
 
 /* Wave drifts sideways, very slowly */
@@ -1095,7 +1210,7 @@ body.nav-open .site-header{
 .site-header{ transition: box-shadow .3s ease, background-color .3s ease; }
 .site-header.scrolled{
   box-shadow: 0 1px 24px rgba(11,31,53,0.10);
-  background: rgba(247,245,241,0.96);
+  background: var(--header-bg-solid);
 }
 .nav-logo,
 .footer-logo{ transition: width .3s ease; }
@@ -1122,10 +1237,6 @@ body.nav-open .site-header{
   .hero-inner > *{ opacity: 1; transform: none; animation: none; }
   .hero-bg img{ animation: none; transform: scale(1.14); }
   .wave-divider svg{ animation: none; }
-  .parallax,
-  .hero-bg{ transform: none !important; }
-  .figure img.parallax,
-  .founder-photo img.parallax{ transform: scale(1.18); }
   .card:hover .card-icon,
   .package:hover,
   .retainer:hover,
